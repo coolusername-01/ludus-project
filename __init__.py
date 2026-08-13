@@ -5,6 +5,7 @@ from CTFd.models import db, Challenges
 from CTFd.plugins.challenges import CTFdStandardChallenge, CHALLENGE_CLASSES
 from CTFd.plugins.challenges import (
     CTFdStandardChallenge,
+    BaseChallenge,
     CHALLENGE_CLASSES,
 )
 from CTFd.plugins import register_plugin_assets_directory
@@ -13,7 +14,7 @@ headers = {
 'X-API-KEY': 'AD.zxSCk8jbiQIKUFSCr5fD9sPb5P2iWXmo2qp7bh9m'    ##need to put something here and also swap and remove it from when I have finished
 }
 
-class LudusChallenge(Challenges):
+class LudusChallengeModel(Challenges):
     __mapper_args__ = {"polymorphic_identity": "ludus"}
 
     id = db.Column(
@@ -22,20 +23,30 @@ class LudusChallenge(Challenges):
         primary_key=True
     )
 
-class LudusChallenger(BaseChallenge):
+class LudusChallenge(BaseChallenge):
     id = "ludus"
     name = "Ludus"
-    challenge_model = LudusChallenge    
+    challenge_model = LudusChallengeModel
+    templates = {
+        "create": "/plugins/ludus-project/assets/create.html",
+        "update": "/plugins/ludus-project/assets/update.html",
+        "view": "/plugins/ludus-project/assets/view.html",
+    }
 
+    scripts = {
+        "create": "/plugins/ludus-project/assets/create.js",
+        "update": "/plugins/ludus-project/assets/update.js",
+        "view": "/plugins/ludus-project/assets/view.js",
+    }
 
 class Ranges(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ludus_user_id = db.Column(db.String(128), nullable=False, unique=True)
     ctfd_user = db.Column(db.String(128), nullable=True)
 
-    def __init__(self, team, location):
-        self.target = team
-        self.location = location
+    def __init__(self, ludus_user_id, ctfd_user=None):
+        self.ludus_user_id = ludus_user_id
+        self.ctfd_user = ctfd_user
 
 ludus_bp = Blueprint(
     "ludus_ranges",
@@ -101,7 +112,7 @@ def load(app):
     
     register_plugin_assets_directory(
         app,
-        base_path="/plugins/challenges/assets/"
+        base_path="/plugins/ludus-project/assets/"
     )
     CHALLENGE_CLASSES["ludus"] = LudusChallenge
  
@@ -117,4 +128,4 @@ def db_setup():
     for user_id in user_ids:
         new_user = Ranges(user_id, None)
         db.session.add(new_user)
-    db.session.commit
+    db.session.commit()

@@ -1,0 +1,19 @@
+<div>
+    <h3>{{ challenge.name }}</h3>
+
+    <div id="challenge-description">
+        {{ challenge.description | safe }}
+    </div>
+
+    <input
+        id="challenge-answer"
+        type="text"
+        placeholder="Enter your answer"
+    >
+
+    <button id="challenge-submit">
+        Submit
+    </button>
+
+    <div id="challenge-result"></div>
+</div>

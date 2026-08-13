@@ -61,8 +61,8 @@ def challenge_info(challenge_id):
 ##list range vms, power state and  testing /range
     url = "https://172.28.252.105:8080/api/v2/range"
     user = get_current_user().name
-    #user = "TP"
-        ##insert ludus server ip api thingy here
+    
+    ##insert ludus server ip api thingy here
     params = {
     "rangeID": assign_user(user),
     "userID": user,
@@ -107,14 +107,18 @@ def assign_user(user):
 
 def load(app):
     app.register_blueprint(ludus_bp)
-    db_setup()
+    Ranges.__table__.drop(db.engine, checkfirst=True)
     db.create_all()
+    db_setup()
+    
+    
     
     register_plugin_assets_directory(
         app,
         base_path="/plugins/ludus-project/assets/"
     )
     CHALLENGE_CLASSES["ludus"] = LudusChallenge
+    print("AVAILABLE CHALLENGE TYPES:", CHALLENGE_CLASSES.keys())
  
 ##creating the database to assign ctfd users to
 def db_setup():

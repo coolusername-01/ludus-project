@@ -1,19 +1,29 @@
-<div>
-    <h3>{{ challenge.name }}</h3>
+{% extends "challenge.html" %}
 
-    <div id="challenge-description">
-        {{ challenge.description | safe }}
+{% block description %}
+    <div>
+        <h3>{{ challenge.name }}</h3>
+
+        <div id="challenge-description">
+            {{ challenge.description | safe }}
+        </div>
+
+        <div id="ludus-info">
+            <p>TEST RANGE</p>
+            <p>Range: <span id="range-id">Loading...</span></p>
+            <p>Kali IP: <span id="kali-ip">Loading...</span></p>
+        </div>
+
+        <input
+            id="challenge-answer"
+            type="text"
+            placeholder="Enter your answer"
+        >
+
+        <button id="challenge-submit">
+            Submit
+        </button>
+
+        <div id="challenge-result"></div>
     </div>
-
-    <input
-        id="challenge-answer"
-        type="text"
-        placeholder="Enter your answer"
-    >
-
-    <button id="challenge-submit">
-        Submit
-    </button>
-
-    <div id="challenge-result"></div>
-</div>
+{% endblock %}

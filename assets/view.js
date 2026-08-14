@@ -1,4 +1,4 @@
-
+console.log("LUDUS VIEW.JS STARTED");
 
 CTFd._internal.challenge.data = undefined;
 
@@ -42,9 +42,46 @@ CTFd._internal.challenge.submit = function(preview) {
 async function loadLudusInfo() {
     console.log("Ludus view.js loaded");
 
-    const challengeId = challenge.data.id;
-    console.log("Challenge ID:", challengeId);
+    // const challengeId = CTFd._internal.challenge.data.id;;
+    // console.log("Challenge ID:", challengeId);
+    // console.log("Challenge ID:", challengeId);
 
-    const response = await fetch(
-        `/ludus_ranges/challenge/${challengeId}`
-    )};
+    try
+    {
+      const response = await fetch(
+        //`/ludus_ranges/challenges/${challengeId}`
+        `/ludus_ranges/challenges`
+      );
+
+      if (!response.ok) {
+        rangeId.textContent = "Check back later";
+        kaliIp.textContent = "Check back later";
+        return;
+      }
+    
+    
+      console.log("FETCH COMPLETED");
+      const data = await response.json();
+      //console.log("rangeId:", data.range_id);
+      //console.log("kaliIp:", data.kali_ip);
+      document.getElementById("range-id").textContent = data.range_id;
+      document.getElementById("kali-ip").textContent = data.kali_ip;
+    }
+    catch(error)
+    {
+      console.error("Failed to load Ludus information:", error);
+
+      rangeId.textContent = "Check back later";
+      kaliIp.textContent = "Check back later";
+    }
+  }
+//ai generated render stuff?? 
+const oldPostRender = CTFd._internal.challenge.postRender;
+
+CTFd._internal.challenge.postRender = function () {
+    if (oldPostRender) {
+        oldPostRender();
+    }
+
+    loadLudusInfo();
+};

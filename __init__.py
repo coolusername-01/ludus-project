@@ -55,30 +55,53 @@ ludus_bp = Blueprint(
     static_folder="assets"
 )
 
-@ludus_bp.route("/challenges/<int:challenge_id>")
-def challenge_info(challenge_id):
+# @ludus_bp.route("/challenges/<int:challenge_id>")
+@ludus_bp.route("/challenges")
+def challenge_info():   ##don't need parameter here?
 ##list ranges accessible to the user
 ##list range vms, power state and  testing /range
-    url = "https://172.28.252.105:8080/api/v2/range"
     user = get_current_user().name
-    
-    ##insert ludus server ip api thingy here
-    params = {
-    "rangeID": assign_user(user),
-    "userID": user,
-    "details": False #do you want to return OS version, license, update info, etc
-    }
-
-    response = requests.get(
+    ludus_user = assign_user(user)
+    url = "https://172.28.252.105:8080/api/v2/ranges/accessible"     ##fetch range for user 
+    params = {"userID": ludus_user}
+    user_range = requests.get(
         url,
         params=params,
         headers=headers,
         timeout=10,
         verify=False
     )
+    print("URL:", user_range.url)
+    print("Status:", user_range.status_code)
+    print("Body:", user_range.text)
 
-    print(response.text)
-    return jsonify({"kali_ip": kali_ip})
+    user_range = user_range.json()
+    rangeID = user_range[0]["rangeID"]
+
+    url = "https://172.28.252.105:8080/api/v2/range"        ##fetch range ip for user
+    params = {
+    "rangeID": rangeID,   
+    "userID": ludus_user,
+    "details": False #do you want to return OS version, license, update info, etc
+    }
+
+    range_details = requests.get(
+        url,
+        params=params,
+        headers=headers,
+        timeout=10,
+        verify=False
+    ).json()
+
+    print(range_details)
+    device_name = ludus_user + "-kali"
+    print("device name: " + device_name)
+    for vm in range_details.get("VMs", []):
+        if vm.get("name") == device_name:
+            kali_ip = vm.get("ip")
+            print(kali_ip)
+
+    return jsonify({"range_id": kali_ip, "kali_ip": kali_ip})
 
 
 
@@ -110,8 +133,6 @@ def load(app):
     Ranges.__table__.drop(db.engine, checkfirst=True)
     db.create_all()
     db_setup()
-    
-    
     
     register_plugin_assets_directory(
         app,

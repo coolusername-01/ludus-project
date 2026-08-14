@@ -1,6 +1,6 @@
 from CTFd.utils.user import get_current_user
 import requests
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, Response
 from CTFd.models import db, Challenges
 from CTFd.plugins.challenges import CTFdStandardChallenge, CHALLENGE_CLASSES
 from CTFd.plugins.challenges import (
@@ -103,7 +103,28 @@ def challenge_info():   ##don't need parameter here?
 
     return jsonify({"range_id": kali_ip, "kali_ip": kali_ip})
 
+@ludus_bp.route("/wireguard/config")
+def wireguard_conf():
+    user = get_current_user().name
+    ludus_user = assign_user(user)  ##can i reduce this to a global var
+    url = "https://172.28.252.105:8080/api/v2/user/wireguard"
+    params = {"userID": ludus_user}
+    response = requests.get(
+        url,
+        params=params,
+        headers=headers,
+        timeout=10,
+        verify=False
+    ).json()
 
+    config = response["result"]["wireGuardConfig"]
+    return Response(
+    config,
+    mimetype="text/plain",
+    headers={
+        "Content-Disposition": 'attachment; filename="ludus.conf"'
+    }
+)
 
 @ludus_bp.route("/test")
 def test():

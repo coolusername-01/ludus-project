@@ -2,13 +2,9 @@ from CTFd.utils.user import get_current_user
 import requests
 from flask import Blueprint, jsonify, Response
 from CTFd.models import db, Challenges
-from CTFd.plugins.challenges import CTFdStandardChallenge, CHALLENGE_CLASSES
-from CTFd.plugins.challenges import (
-    CTFdStandardChallenge,
-    BaseChallenge,
-    CHALLENGE_CLASSES,
-)
+from CTFd.plugins.challenges import BaseChallenge, CHALLENGE_CLASSES
 from CTFd.plugins import register_plugin_assets_directory
+
 payload = {}
 headers = {
 'X-API-KEY': 'AD.zxSCk8jbiQIKUFSCr5fD9sPb5P2iWXmo2qp7bh9m'    ##need to put something here and also swap and remove it from when I have finished
@@ -16,12 +12,7 @@ headers = {
 
 class LudusChallengeModel(Challenges):
     __mapper_args__ = {"polymorphic_identity": "ludus"}
-
-    id = db.Column(
-        None,
-        db.ForeignKey("challenges.id"),
-        primary_key=True
-    )
+    id = db.Column(None, db.ForeignKey("challenges.id"), primary_key=True)
 
 class LudusChallenge(BaseChallenge):
     id = "ludus"

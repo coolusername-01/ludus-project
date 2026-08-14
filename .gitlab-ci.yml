@@ -12,4 +12,4 @@ include:
   - project: "internal-public/ci-templates"
     ref: main
     file:
-      - "code_lint/python_check"
+      - "code_lint/python_check.yaml"

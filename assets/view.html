@@ -1,29 +1,57 @@
 {% extends "challenge.html" %}
 
 {% block description %}
-    <div>
-        <h3>{{ challenge.name }}</h3>
+<div>
 
-        <div id="challenge-description">
-            {{ challenge.description | safe }}
-        </div>
-
-        <div id="ludus-info">
-            <p>TEST RANGE</p>
-            <p>Range: <span id="range-id">Loading...</span></p>
-            <p>Kali IP: <span id="kali-ip">Loading...</span></p>
-        </div>
-
-        <input
-            id="challenge-answer"
-            type="text"
-            placeholder="Enter your answer"
-        >
-
-        <button id="challenge-submit">
-            Submit
-        </button>
-
-        <div id="challenge-result"></div>
+    <div id="challenge-description">
+        {{ challenge.description | safe }}
     </div>
+
+    <div class="card mt-3 mb-3">
+        <div class="card-body py-3">
+
+            <h5 class="mb-3">Ludus VM Connection</h5>
+
+                <div id="ludus-info" class="col-md-4">
+                    <strong>Kali IP</strong>
+                    <div>
+                        <p>Kali IP: <span id="kali-ip">Loading...</span></p>
+                        <p>Range: <span id="range-id">Loading...</span></p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <strong>Credentials</strong>
+                    <div>
+                        Username: <code id="username">kali</code>
+                    </div>
+                    <div>
+                        Password: <code id="password">kali</code>
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding-left: 15px;">
+                <a
+                    href="/ludus_ranges/wireguard/config"
+                    class="btn btn-primary btn-sm"
+                    download
+                >
+                    Download WireGuard Config
+                </a>
+            </div>
+
+            <div style="padding-left: 15px;">
+                <small class="text-muted">
+                    After downloading the config, connect to the range VPN using:
+                </small>
+                <pre class="mt-2 mb-0"><code>sudo wg-quick up ./ludus.conf</code></pre>
+                <small class="text-muted">
+                    to allow you to ssh into the VM.
+                </small>
+            </div>
+
+        </div>
+    </div>
+</div>
 {% endblock %}

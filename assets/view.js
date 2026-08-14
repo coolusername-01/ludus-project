@@ -1,17 +1,11 @@
-console.log("LUDUS VIEW.JS STARTED");
-
+//ctfd premade view.js template
 CTFd._internal.challenge.data = undefined;
-
 // TODO: Remove in CTFd v4.0
 CTFd._internal.challenge.renderer = null;
-
 CTFd._internal.challenge.preRender = function() {};
-
 // TODO: Remove in CTFd v4.0
 CTFd._internal.challenge.render = null;
-
 CTFd._internal.challenge.postRender = function() {};
-
 CTFd._internal.challenge.submit = function(preview) {
   var challenge_id = parseInt(CTFd.lib.$("#challenge-id").val());
   var submission = CTFd.lib.$("#challenge-input").val();
@@ -38,14 +32,9 @@ CTFd._internal.challenge.submit = function(preview) {
   });
 };
 
-
+//my ludus addition
 async function loadLudusInfo() {
     console.log("Ludus view.js loaded");
-
-    // const challengeId = CTFd._internal.challenge.data.id;;
-    // console.log("Challenge ID:", challengeId);
-    // console.log("Challenge ID:", challengeId);
-
     try
     {
       const response = await fetch(
@@ -59,11 +48,9 @@ async function loadLudusInfo() {
         return;
       }
     
-    
       console.log("FETCH COMPLETED");
       const data = await response.json();
-      //console.log("rangeId:", data.range_id);
-      //console.log("kaliIp:", data.kali_ip);
+   
       document.getElementById("range-id").textContent = data.range_id;
       document.getElementById("kali-ip").textContent = data.kali_ip;
     }
@@ -75,13 +62,12 @@ async function loadLudusInfo() {
       kaliIp.textContent = "Check back later";
     }
   }
+
 //ai generated render stuff?? 
-const oldPostRender = CTFd._internal.challenge.postRender;
+if (!CTFd._internal.challenge.ludusPostRenderInstalled) {
+    CTFd._internal.challenge.ludusPostRenderInstalled = true;
 
-CTFd._internal.challenge.postRender = function () {
-    if (oldPostRender) {
-        oldPostRender();
-    }
-
-    loadLudusInfo();
-};
+    CTFd._internal.challenge.postRender = function () {
+        loadLudusInfo();
+    };
+}

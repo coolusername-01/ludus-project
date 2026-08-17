@@ -25,6 +25,11 @@
     dest: /etc/apt/keyrings/docker.asc
     mode: "0644"
 
+- name: Check python3-debian
+  ansible.builtin.command:
+    cmd: /usr/bin/python3 -c "import debian; print(debian.__file__)"
+  changed_when: false
+
 - name: Add docker directory
   ansible.builtin.deb822_repository:
     name: docker

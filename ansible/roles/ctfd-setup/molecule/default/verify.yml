@@ -1,0 +1,62 @@
+---
+- name: Verify CTFd setup
+  hosts: all
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Gather installed package facts
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: Verify prequisites are installed
+      ansible.builtin.assert:
+        that:
+          - "'ca-certificates' in ansible_facts.packages"
+          - "'curl' in ansible_facts.packages"
+          - "'git' in ansible_facts.packages"
+          - "'python3-debian' in ansible_facts.packages"
+
+    - name: Check keyrings directory
+      ansible.builtin.stat:
+        path: /etc/apt/keyrings
+      register: keyrings_dir
+
+    - name: Verify keyrings directory exists
+      ansible.builtin.assert:
+        that:
+          - keyrings_dir.stat.exists
+          - keyrings_dir.stat.isdir
+          - keyrings_dir.stat.mode == '0755'
+        fail_msg: "/etc/apt/keyrings does not exist or has incorrect permissions"
+
+    - name: Gather service facts
+      ansible.builtin.service_facts:
+    
+    - name: Assert Docker is running
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.services['docker.service'].state == 'running'
+        fail_msg: "Docker service is not running"
+
+    - name: Verify git repo has been cloned into CTFd directory
+      ansible.builtin.stat:
+        path: /opt/CTFd
+      register: ctfd_dir
+
+    - name: Assert CTFd directory exists
+      ansible.builtin.assert:
+        that:
+          - ctfd_dir.stat.exists
+          - ctfd_dir.stat.isdir
+
+    - name: Verify Docker Compose file exists
+      ansible.builtin.stat:
+        path: /opt/CTFd/docker-compose.yml
+      register: compose_file
+
+    - name: Assert Docker Compose file exists
+      ansible.builtin.assert:
+        that:
+          - compose_file.stat.exists
+          - compose_file.stat.isreg

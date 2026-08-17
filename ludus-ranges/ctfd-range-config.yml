@@ -8,4 +8,4 @@ ludus:
     cpus: 2
     linux: true
     roles:
-      - name: ctfd-setup
+      - name: alicev.ctfd-setup

@@ -11,6 +11,7 @@
       - git
       - python3-debian
     state: present
+    update_cache: true
 
 - name: Create keyrings directory
   ansible.builtin.file:

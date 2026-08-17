@@ -1,0 +1,7 @@
+---
+galaxy_info:
+  author: alicev
+  description: CTFd setup role
+  min_ansible_version: "2.9"
+
+dependencies: []

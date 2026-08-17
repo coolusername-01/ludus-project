@@ -1,0 +1,7 @@
+- name: Set up CTFd
+  hosts: ctfd
+  become: true
+  roles:
+    ctfd-setup
+
+    

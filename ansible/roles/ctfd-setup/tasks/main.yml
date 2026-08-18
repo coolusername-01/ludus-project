@@ -72,7 +72,7 @@
 
 - name: Generate secret key
   ansible.builtin.set_fact:
-    ctfd_secret_key: "{{ lookup('ansible.builtin.password', '/home/debain/.ctfd-secret-key length=64 chars=ascii_letters,digits') }}"
+    ctfd_secret_key: "{{ lookup('ansible.builtin.password', '/tmp/.ctfd-secret-key length=64 chars=ascii_letters,digits') }}"
   no_log: false
 
 - name: Insert secret key into docker compose

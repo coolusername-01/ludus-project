@@ -85,7 +85,7 @@
 - name: Copy plugin into ctfd vm
   ansible.builtin.copy:
     src: ctfd-plugin/
-    dest: /CTFd/CTFd/plugins/ctfd-plugin
+    dest: /opt/CTFd/CTFd/plugins/ctfd-plugin
 
 - name: Start CTFd
   ansible.builtin.command:

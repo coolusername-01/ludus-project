@@ -82,12 +82,14 @@
     regexp: '^\s*-\s*SECRET_KEY=' #idempotency checks
     line: '      - SECRET_KEY={{ ctfd_secret_key }}'
 
+- name: Copy plugin into ctfd vm
+  ansible.builtin.copy:
+    src: ctfd-plugin/
+    dest: /CTFd/CTFd/plugins/ctfd-plugin
+
 - name: Start CTFd
   ansible.builtin.command:
     cmd: docker compose up -d
     chdir: /opt/CTFd
 
-- name: Copy plugin into ctfd vm
-  ansible.builtin.copy:
-    src: ctfd-plugin/
-    dest: /CTFd/CTFd/plugins/ctfd-plugin
+

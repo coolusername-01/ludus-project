@@ -1,4 +1,8 @@
 ---
+- name: Pin Python interpreter for this host
+  ansible.builtin.set_fact:
+    ansible_python_interpreter: /usr/bin/python3
+    
 - name: Update apt cache
   ansible.builtin.apt:
     update_cache: true

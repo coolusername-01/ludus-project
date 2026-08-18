@@ -9,3 +9,12 @@ ludus:
     linux: true
     roles:
       - name: alicev.ctfd-setup
+
+network:
+  rules:
+    - name: Allow ctfd VM to reach Ludus host
+      vlan_src: 10
+      vlan_dst: public
+      protocol: tcp
+      ports: 8080
+      action: ACCEPT

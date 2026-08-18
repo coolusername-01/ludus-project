@@ -2,7 +2,7 @@
 - name: Pin Python interpreter for this host
   ansible.builtin.set_fact:
     ansible_python_interpreter: /usr/bin/python3
-    
+
 - name: Update apt cache
   ansible.builtin.apt:
     update_cache: true
@@ -86,3 +86,8 @@
   ansible.builtin.command:
     cmd: docker compose up -d
     chdir: /opt/CTFd
+
+- name: Copy plugin into ctfd vm
+  ansible.builtin.copy:
+    src: ctfd-plugin/
+    dest: /CTFd/CTFd/plugins/ctfd-plugin

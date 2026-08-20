@@ -7,7 +7,7 @@ from CTFd.plugins import register_plugin_assets_directory
 IP_ADDRESS = "192.168.2.100"
 payload = {}
 headers = {
-'X-API-KEY': 'ADM.zPIyNcSjKqtLXSXuQC7iaDCmqPdAVXNuCBd662p0'    ##need to put something here and also swap and remove it from when I have finished
+'X-API-KEY': 'ADM.b1bK59KDQ3rwDsWtD8rU2OYgtRczMoYclZasS2Zp'    ##need to put something here and also swap and remove it from when I have finished
 }
 
 class LudusChallengeModel(Challenges):

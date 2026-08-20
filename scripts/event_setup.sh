@@ -1,5 +1,5 @@
+#!/bin/bash
 #a script to automate event setup with personalisation of ranges using flags
-
 while getopts "n:r:" opt; do
   case $opt in
 	n) num_ranges="$OPTARG" ;;
@@ -20,4 +20,5 @@ for i in $(seq 1 "$num_ranges"); do
     ludus range config set "$range"
     ludus range deploy \
         --user "LAB$i"
+    echo "range $i has deployed"
 done

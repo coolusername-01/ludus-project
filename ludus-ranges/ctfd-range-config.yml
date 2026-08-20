@@ -21,4 +21,4 @@ network:
 
 router:
   iptables_commands:
-    - iptables -I LUDUS_DEFAULTS 1 -s 10.1.10.10 -d 172.28.252.105 -p tcp --dport 8080 -j ACCEPT
+    - iptables -I LUDUS_DEFAULTS 1 -s 10.1.10.10 -d 192.168.2.100 -p tcp --dport 8080 -j ACCEPT

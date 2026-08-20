@@ -4,7 +4,7 @@ from flask import Blueprint, jsonify, Response
 from CTFd.models import db, Challenges
 from CTFd.plugins.challenges import BaseChallenge, CHALLENGE_CLASSES
 from CTFd.plugins import register_plugin_assets_directory
-
+IP_ADDRESS = "192.168.2.100"
 payload = {}
 headers = {
 'X-API-KEY': 'AD.zxSCk8jbiQIKUFSCr5fD9sPb5P2iWXmo2qp7bh9m'    ##need to put something here and also swap and remove it from when I have finished
@@ -53,7 +53,7 @@ def challenge_info():   ##don't need parameter here?
 ##list range vms, power state and  testing /range
     user = get_current_user().name
     ludus_user = assign_user(user)
-    url = "https://172.28.252.105:8080/api/v2/ranges/accessible"     ##fetch range for user 
+    url = f"https://{IP_ADDRESS}:8080/api/v2/ranges/accessible"     ##fetch range for user 
     params = {"userID": ludus_user}
     user_range = requests.get(
         url,
@@ -69,7 +69,7 @@ def challenge_info():   ##don't need parameter here?
     user_range = user_range.json()
     rangeID = user_range[0]["rangeID"]
 
-    url = "https://172.28.252.105:8080/api/v2/range"        ##fetch range ip for user
+    url = f"https://{IP_ADDRESS}:8080/api/v2/range"        ##fetch range ip for user
     params = {
     "rangeID": rangeID,   
     "userID": ludus_user,
@@ -98,7 +98,7 @@ def challenge_info():   ##don't need parameter here?
 def wireguard_conf():
     user = get_current_user().name
     ludus_user = assign_user(user)  ##can i reduce this to a global var
-    url = "https://172.28.252.105:8080/api/v2/user/wireguard"
+    url = f"https://{IP_ADDRESS}:8080/api/v2/user/wireguard"
     params = {"userID": ludus_user}
     response = requests.get(
         url,
@@ -155,7 +155,7 @@ def load(app):
  
 ##creating the database to assign ctfd users to
 def db_setup():
-    url = "https://172.28.252.105:8080/api/v2/user/all"
+    url = f"https://{IP_ADDRESS}:8080/api/v2/user/all"
     all_ludus_users = (requests.request("GET", url, headers=headers, data=payload, verify=False)).json()
     print(all_ludus_users)
     user_ids = [

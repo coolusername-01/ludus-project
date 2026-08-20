@@ -78,7 +78,7 @@
 - name: Insert secret key into docker compose
   ansible.builtin.lineinfile:
     path: /opt/CTFd/docker-compose.yml
-    insertafter: "environment:"
+    insertafter: '^\s*- REVERSE_PROXY=true'
     regexp: '^\s*-\s*SECRET_KEY=' #idempotency checks
     line: '      - SECRET_KEY={{ ctfd_secret_key }}'
 

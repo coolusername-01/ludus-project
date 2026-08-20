@@ -68,6 +68,7 @@
     repo: 'https://github.com/CTFd/CTFd.git'
     dest: /opt/CTFd
     update: true
+    force: true
 
 
 - name: Generate secret key

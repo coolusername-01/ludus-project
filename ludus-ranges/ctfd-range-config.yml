@@ -3,7 +3,7 @@ ludus:
     hostname: "{{ range_id }}-ctfd"
     template: debian-12-x64-server-template
     vlan: 10
-    ip_last_octet: 10
+    ip_last_octet: 10   #last num on the ip
     ram_gb: 4
     cpus: 2
     linux: true
@@ -18,3 +18,7 @@ network:
       protocol: tcp
       ports: 8080
       action: ACCEPT
+
+router:
+  iptables_commands:
+    - iptables -I LUDUS_DEFAULTS 1 -s 10.1.10.10 -d 172.28.252.105 -p tcp --dport 8080 -j ACCEPT

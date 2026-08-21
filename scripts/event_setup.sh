@@ -1,5 +1,6 @@
 #!/bin/bash
 #a script to automate event setup with personalisation of ranges using flags
+set -e
 while getopts "n:r:" opt; do
   case $opt in
 	n) num_ranges="$OPTARG" ;;

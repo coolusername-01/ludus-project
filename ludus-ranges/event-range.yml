@@ -1,0 +1,33 @@
+ludus:
+  - vm_name: "{{ range_id }}-debian12"
+    hostname: "{{ range_id }}-debian12"
+    template: debian-12-x64-server-template
+    vlan: 10
+    ip_last_octet: 10
+    ram_gb: 4
+    cpus: 2
+    linux: true
+    testing:
+      snapshot: true
+      block_internet: true
+
+  - vm_name: "{{ range_id }}-kali"
+    hostname: "{{ range_id }}-kali"
+    template: kali-x64-desktop-template
+    vlan: 10
+    ip_last_octet: 20
+    ram_gb: 8
+    cpus: 4
+    linux: true
+    testing:
+      snapshot: true
+      block_internet: true
+
+network:
+  inter_vlan_default: ACCEPT
+  external_default: REJECT
+
+defaults:
+  snapshot_with_RAM: true
+  timezone: Europe/London
+  target_node: pve1

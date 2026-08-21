@@ -17,9 +17,10 @@ for i in $(seq 1 "$num_ranges"); do
         --password "password$i"
     ludus range create \
         --name "range$i" \
-        --users "LAB$i" \
-        --range-id "range$i"
+        --users "LAB$i"
+    echo "range has been created"
     ludus range config set -f "$range"
+    echo "range config set"
     ludus range deploy \
         --user "LAB$i"
     echo "range $i has deployed"

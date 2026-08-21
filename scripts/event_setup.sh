@@ -15,6 +15,7 @@ for i in $(seq 1 "$num_ranges"); do
         --name "Player$i" \
         --email "lab$i@example.invalid" \
         --password "password$i"
+    echo "user has been added"    
     ludus range create \
         --name "range$i" \
         --users "LAB$i"

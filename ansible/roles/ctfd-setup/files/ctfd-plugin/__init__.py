@@ -19,15 +19,15 @@ class LudusChallenge(BaseChallenge):
     name = "Ludus"
     challenge_model = LudusChallengeModel
     templates = {
-        "create": "/plugins/ludus-project/assets/create.html",
-        "update": "/plugins/ludus-project/assets/update.html",
-        "view": "/plugins/ludus-project/assets/view.html",
+        "create": "/plugins/ctfd-plugin/assets/create.html",
+        "update": "/plugins/ctfd-plugin/assets/update.html",
+        "view": "/plugins/ctfd-plugin/assets/view.html",
     }
 
     scripts = {
-        "create": "/plugins/ludus-project/assets/create.js",
-        "update": "/plugins/ludus-project/assets/update.js",
-        "view": "/plugins/ludus-project/assets/view.js",
+        "create": "/plugins/ctfd-plugin/assets/create.js",
+        "update": "/plugins/ctfd-plugin/assets/update.js",
+        "view": "/plugins/ctfd-plugin/assets/view.js",
     }
 
 class Ranges(db.Model):

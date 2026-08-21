@@ -148,7 +148,7 @@ def load(app):
     
     register_plugin_assets_directory(
         app,
-        base_path="/plugins/ludus-project/assets/"
+        base_path="/plugins/ctfd-plugin/assets/"
     )
     CHALLENGE_CLASSES["ludus"] = LudusChallenge
     print("AVAILABLE CHALLENGE TYPES:", CHALLENGE_CLASSES.keys())

@@ -18,7 +18,8 @@ for i in $(seq 1 "$num_ranges"); do
     echo "user has been added"    
     ludus range create \
         --name "range$i" \
-        --users "LAB$i"
+        --users "LAB$i" \
+        -r "range$1"
     echo "range has been created"
     ludus range config set -f "$range"
     echo "range config set"

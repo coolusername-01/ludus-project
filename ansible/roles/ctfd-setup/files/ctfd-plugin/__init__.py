@@ -92,7 +92,7 @@ def challenge_info():   ##don't need parameter here?
             kali_ip = vm.get("ip")
             print(kali_ip)
 
-    return jsonify({"range_id": kali_ip, "kali_ip": kali_ip})
+    return jsonify({"kali_ip": kali_ip})
 
 @ludus_bp.route("/wireguard/config")
 def wireguard_conf():

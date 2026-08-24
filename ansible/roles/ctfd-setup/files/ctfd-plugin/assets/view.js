@@ -43,7 +43,7 @@ async function loadLudusInfo() {
       );
 
       if (!response.ok) {
-        document.getElementById("range-id").textContent = "Check back later";
+        
         document.getElementById("kali-ip").textContent = "Check back later";
         return;
       }
@@ -51,14 +51,14 @@ async function loadLudusInfo() {
       console.log("FETCH COMPLETED");
       const data = await response.json();
    
-      document.getElementById("range-id").textContent = data.range_id;
+      
       document.getElementById("kali-ip").textContent = data.kali_ip;
     }
     catch(error)
     {
       console.error("Failed to load Ludus information:", error);
 
-      rangeId.textContent = "Check back later";
+      
       kaliIp.textContent = "Check back later";
     }
   }

@@ -43,8 +43,8 @@ async function loadLudusInfo() {
       );
 
       if (!response.ok) {
-        rangeId.textContent = "Check back later";
-        kaliIp.textContent = "Check back later";
+        document.getElementById("range-id").textContent = "Check back later";
+        document.getElementById("kali-ip").textContent = "Check back later";
         return;
       }
     

@@ -161,6 +161,7 @@ def db_setup():
     user_ids = [
         user["userID"]
         for user in all_ludus_users
+        if user["userID"] != "ADM"      ###this is user specific and needs to be changed
     ]
     for user_id in user_ids:
         new_user = Ranges(user_id, None)

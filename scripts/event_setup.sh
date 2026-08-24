@@ -9,7 +9,14 @@ while getopts "n:r:" opt; do
   esac
 done
 
-for i in $(seq 1 "$num_ranges"); do
+##looking up each LAB id to find next available id
+i=1
+while ludus users list all | grep -q "LAB$i"; do
+    ((i++))
+done
+end=$((i + num_ranges - 1))
+
+for (( ; i <= end; i++)); do
     ludus users add \
         --userid "LAB$i" \
         --name "Player$i" \

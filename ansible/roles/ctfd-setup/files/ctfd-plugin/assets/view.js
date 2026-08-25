@@ -67,15 +67,12 @@ async function loadLudusInfo() {
     }
   }
 
-window.addEventListener("hashchange", function () {
-    loadLudusInfo();
-});
 
-// //ai generated render stuff?? 
-// if (!CTFd._internal.challenge.ludusPostRenderInstalled) {
-//     CTFd._internal.challenge.ludusPostRenderInstalled = true;
+//ai generated render stuff?? 
+if (!CTFd._internal.challenge.ludusPostRenderInstalled) {
+    CTFd._internal.challenge.ludusPostRenderInstalled = true;
 
-//     CTFd._internal.challenge.postRender = function () {
-//         loadLudusInfo();
-//     };
-// }
+    CTFd._internal.challenge.postRender = function () {
+        loadLudusInfo();
+    };
+}

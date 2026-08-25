@@ -46,10 +46,14 @@ ludus_bp = Blueprint(
     static_folder="assets"
 )
 
-@ludus_bp.route("/challenges")
-def challenge_info():   ##don't need parameter here?
-##list ranges accessible to the user
-##list range vms, power state and  testing /range
+@ludus_bp.route("/challenges/<int:challenge_id>")
+def challenge_info(challenge_id):
+    challenge = Challenges.query.filter_by(id=challenge_id).first()
+    if challenge.type != "ludus":
+        return jsonify({"error": "Not a Ludus challenge"}), 400
+    
+    ##list ranges accessible to the user
+    ##list range vms, power state and  testing /range
     user = get_current_user().name
     ludus_user = assign_user(user)
     url = f"https://{IP_ADDRESS}:8080/api/v2/ranges/accessible"     ##fetch range for user 

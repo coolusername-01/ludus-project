@@ -41,34 +41,32 @@ async function loadLudusInfo() {
     }
     try
     {
+      // const response = await fetch(
+      //   //`/ludus_ranges/challenges/${challengeId}`
+      //   `/ludus_ranges/challenges`
+      // );
+      const hash = window.location.hash;
+      const challengeId = hash.split("-").pop();
       const response = await fetch(
-        //`/ludus_ranges/challenges/${challengeId}`
-        `/ludus_ranges/challenges`
+          `/ludus_ranges/challenges/${challengeId}`
       );
-
       if (!response.ok) {
-        
-        document.getElementById("kali-ip").textContent = "Check back later";
-        return;
+          document.getElementById("kali-ip").textContent = "Check back later";
+          return;
       }
-    
       console.log("FETCH COMPLETED");
       const data = await response.json();
-   
-      
       document.getElementById("kali-ip").textContent = data.kali_ip;
     }
     catch(error)
     {
       console.error("Failed to load Ludus information:", error);
-
-      
       kaliIp.textContent = "Check back later";
     }
   }
 
 
-//ai generated render stuff?? 
+// //ai generated render stuff?? 
 if (!CTFd._internal.challenge.ludusPostRenderInstalled) {
     CTFd._internal.challenge.ludusPostRenderInstalled = true;
 

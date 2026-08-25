@@ -35,8 +35,8 @@ CTFd._internal.challenge.submit = function(preview) {
 //my ludus addition
 async function loadLudusInfo() {
     console.log("Ludus view.js loaded");
+    //don't run if just on the home page
     if (!window.location.hash) {
-      console.log("No challenge selected");
       return;
     }
     try
@@ -67,16 +67,15 @@ async function loadLudusInfo() {
     }
   }
 
-//ai generated render stuff?? 
-if (!CTFd._internal.challenge.ludusPostRenderInstalled) {
-    CTFd._internal.challenge.ludusPostRenderInstalled = true;
-
-    CTFd._internal.challenge.postRender = function () {
-        loadLudusInfo();
-    };
-}
-
-// Run when CTFd changes from /challenges to /challenges#something
 window.addEventListener("hashchange", function () {
     loadLudusInfo();
 });
+
+// //ai generated render stuff?? 
+// if (!CTFd._internal.challenge.ludusPostRenderInstalled) {
+//     CTFd._internal.challenge.ludusPostRenderInstalled = true;
+
+//     CTFd._internal.challenge.postRender = function () {
+//         loadLudusInfo();
+//     };
+// }

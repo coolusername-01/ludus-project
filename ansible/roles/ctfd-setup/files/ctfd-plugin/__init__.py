@@ -46,8 +46,7 @@ ludus_bp = Blueprint(
     static_folder="assets"
 )
 
-# @ludus_bp.route("/challenges/<int:challenge_id>")
-@ludus_bp.route("/challenges")
+@ludus_bp.route("/challenges/<path:challenge_id>")
 def challenge_info():   ##don't need parameter here?
 ##list ranges accessible to the user
 ##list range vms, power state and  testing /range
@@ -122,7 +121,6 @@ def test():
     user = get_current_user()
     print(user.id)
         
-
     return jsonify({
         "id": user.id,
         "name": user.name,

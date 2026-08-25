@@ -75,3 +75,8 @@ if (!CTFd._internal.challenge.ludusPostRenderInstalled) {
         loadLudusInfo();
     };
 }
+
+// Run when CTFd changes from /challenges to /challenges#something
+window.addEventListener("hashchange", function () {
+    loadLudusInfo();
+});

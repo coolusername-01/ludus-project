@@ -23,12 +23,7 @@ for (( ; i <= end; i++)); do
         --email "lab$i@example.invalid" \
         --password "password$i"
     echo "user has been added"    
-    ludus range create \
-        --name "range$i" \
-        --users "LAB$i" \
-        -r "range$1"
-    echo "range has been created"
-    ludus range config set -f "$range"
+    ludus range config set -r "LAB$1" -f "$range"
     echo "range config set"
     ludus range deploy \
         --user "LAB$i"

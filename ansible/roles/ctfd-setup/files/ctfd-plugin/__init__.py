@@ -46,7 +46,7 @@ ludus_bp = Blueprint(
     static_folder="assets"
 )
 
-@ludus_bp.route("/challenges/<path:challenge_id>")
+@ludus_bp.route("/challenges")
 def challenge_info():   ##don't need parameter here?
 ##list ranges accessible to the user
 ##list range vms, power state and  testing /range

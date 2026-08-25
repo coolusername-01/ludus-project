@@ -35,6 +35,10 @@ CTFd._internal.challenge.submit = function(preview) {
 //my ludus addition
 async function loadLudusInfo() {
     console.log("Ludus view.js loaded");
+    if (!window.location.hash) {
+      console.log("No challenge selected");
+      return;
+    }
     try
     {
       const response = await fetch(

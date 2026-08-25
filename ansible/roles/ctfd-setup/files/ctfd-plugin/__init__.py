@@ -142,7 +142,7 @@ def assign_user(user):
 
 def load(app):
     app.register_blueprint(ludus_bp)
-    Ranges.__table__.drop(db.engine, checkfirst=True)
+    
     db.create_all()
     db_setup()
     

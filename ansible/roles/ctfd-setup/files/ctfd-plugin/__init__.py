@@ -139,9 +139,9 @@ def assign_user(user):
 
 
 def load(app):
-    app.register_blueprint(ludus_bp)
-    db.create_all()
     db_setup()
+    db.create_all()
+    app.register_blueprint(ludus_bp)
     
     register_plugin_assets_directory(
         app,

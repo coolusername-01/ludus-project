@@ -142,7 +142,6 @@ def assign_user(user):
 
 def load(app):
     app.register_blueprint(ludus_bp)
-    
     db.create_all()
     db_setup()
     
@@ -164,6 +163,8 @@ def db_setup():
         if user["userID"] != "ADM"      ###this is user specific and needs to be changed
     ]
     for user_id in user_ids:
-        new_user = Ranges(user_id, None)
-        db.session.add(new_user)
+        exists = Ranges.query.filter_by(ludus_user_id=user_id).first()
+        if not exists:
+            new_user = Ranges(user_id, None)
+            db.session.add(new_user)
     db.session.commit()

@@ -48,7 +48,7 @@ async function loadLudusInfo() {
       // const hash = window.location.hash;
       // const challengeId = hash.split("-").pop();
 
-      CTFd.lib.$("#challenge-id").val()
+      const challengeId = CTFd.lib.$("#challenge-id").val()
       const response = await fetch(
           `/ludus_ranges/challenges/${challengeId}`
       );

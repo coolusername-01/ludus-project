@@ -36,9 +36,9 @@ CTFd._internal.challenge.submit = function(preview) {
 async function loadLudusInfo() {
     console.log("Ludus view.js loaded");
     //don't run if just on the home page
-    if (!window.location.hash) {
-      return;
-    }
+    // if (!window.location.hash) {
+    //   return;
+    // }
     try
     {
       // const response = await fetch(

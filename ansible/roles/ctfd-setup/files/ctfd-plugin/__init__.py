@@ -48,8 +48,8 @@ ludus_bp = Blueprint(
     static_folder="assets"
 )
 
-#@ludus_bp.route("/challenges/<int:challenge_id>")
-@ludus_bp.route("/challenges")
+@ludus_bp.route("/challenges/<int:challenge_id>")
+#@ludus_bp.route("/challenges")
 def challenge_info(challenge_id):
     challenge = Challenges.query.filter_by(id=challenge_id).first()
     if challenge.type != "ludus":

@@ -4,10 +4,14 @@ from flask import Blueprint, jsonify, Response
 from CTFd.models import db, Challenges
 from CTFd.plugins.challenges import BaseChallenge, CHALLENGE_CLASSES
 from CTFd.plugins import register_plugin_assets_directory
+import os
+from dotenv import load_dotenv
+#load_dotenv()
 IP_ADDRESS = "192.168.2.100"
 payload = {}
 headers = {
-'X-API-KEY': 'ADM.b1bK59KDQ3rwDsWtD8rU2OYgtRczMoYclZasS2Zp'    ##need to put something here and also swap and remove it from when I have finished
+#'X-API-KEY': os.getenv("LUDUS_API_KEY", "changeme")    ##need to put something here and also swap and remove it from when I have finished
+'X-API-KEY': 'ADM.tgFQpc8PMyLOpxmqBsubSpdZOwm5V0dF6WHAG9BN'
 }
 #taken from ctfd docs
 class LudusChallengeModel(Challenges):

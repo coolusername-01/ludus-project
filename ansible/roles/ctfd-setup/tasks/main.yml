@@ -17,6 +17,10 @@
     state: present
     update_cache: true
 
+- name: Install python-dotenv
+  ansible.builtin.pip:
+    name: python-dotenv
+
 - name: Create keyrings directory
   ansible.builtin.file:
     path: /etc/apt/keyrings

@@ -72,6 +72,9 @@ if (!CTFd._internal.challenge.ludusPostRenderInstalled) {
     CTFd._internal.challenge.ludusPostRenderInstalled = true;
 
     CTFd._internal.challenge.postRender = function () {
-        loadLudusInfo();
+      setTimeout(function () {
+            loadLudusInfo();
+        }, 250);
+        
     };
 }

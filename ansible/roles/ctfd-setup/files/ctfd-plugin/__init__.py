@@ -9,11 +9,13 @@ payload = {}
 headers = {
 'X-API-KEY': 'ADM.b1bK59KDQ3rwDsWtD8rU2OYgtRczMoYclZasS2Zp'    ##need to put something here and also swap and remove it from when I have finished
 }
-
+#taken from ctfd docs
 class LudusChallengeModel(Challenges):
     __mapper_args__ = {"polymorphic_identity": "ludus"}
+    #create link between ludus and parent challenge table
     id = db.Column(None, db.ForeignKey("challenges.id"), primary_key=True)
 
+#challenge type definition
 class LudusChallenge(BaseChallenge):
     id = "ludus"
     name = "Ludus"
@@ -23,13 +25,13 @@ class LudusChallenge(BaseChallenge):
         "update": "/plugins/ctfd-plugin/assets/update.html",
         "view": "/plugins/ctfd-plugin/assets/view.html",
     }
-
     scripts = {
         "create": "/plugins/ctfd-plugin/assets/create.js",
         "update": "/plugins/ctfd-plugin/assets/update.js",
         "view": "/plugins/ctfd-plugin/assets/view.js",
     }
 
+#define ctfd/ludus user mapping table
 class Ranges(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ludus_user_id = db.Column(db.String(128), nullable=False, unique=True)
@@ -46,14 +48,13 @@ ludus_bp = Blueprint(
     static_folder="assets"
 )
 
-@ludus_bp.route("/challenges/<int:challenge_id>")
+#@ludus_bp.route("/challenges/<int:challenge_id>")
+@ludus_bp.route("/challenges")
 def challenge_info(challenge_id):
     challenge = Challenges.query.filter_by(id=challenge_id).first()
     if challenge.type != "ludus":
         return jsonify({"error": "Not a Ludus challenge"}), 400
     
-    ##list ranges accessible to the user
-    ##list range vms, power state and  testing /range
     user = get_current_user().name
     ludus_user = assign_user(user)
     url = f"https://{IP_ADDRESS}:8080/api/v2/ranges/accessible"     ##fetch range for user 
@@ -65,10 +66,6 @@ def challenge_info(challenge_id):
         timeout=10,
         verify=False
     )
-    print("URL:", user_range.url)
-    print("Status:", user_range.status_code)
-    print("Body:", user_range.text)
-
     user_range = user_range.json()
     rangeID = user_range[0]["rangeID"]
 
@@ -100,7 +97,7 @@ def challenge_info(challenge_id):
 @ludus_bp.route("/wireguard/config")
 def wireguard_conf():
     user = get_current_user().name
-    ludus_user = assign_user(user)  ##can i reduce this to a global var
+    ludus_user = assign_user(user)  #could be reduced to a global var but should work regardless?
     url = f"https://{IP_ADDRESS}:8080/api/v2/user/wireguard"
     params = {"userID": ludus_user}
     response = requests.get(
@@ -120,17 +117,18 @@ def wireguard_conf():
     }
 )
 
-@ludus_bp.route("/test")
-def test():
-    user = get_current_user()
-    print(user.id)
+# @ludus_bp.route("/test")
+# def test():
+#     user = get_current_user()
+#     print(user.id)
         
-    return jsonify({
-        "id": user.id,
-        "name": user.name,
-        "email": user.email
-    })
+#     return jsonify({
+#         "id": user.id,
+#         "name": user.name,
+#         "email": user.email
+#     })
 
+#run through db find next available empty slot and insert ctfd user into it - also check if user already in db
 def assign_user(user):
     range_user = Ranges.query.filter_by(ctfd_user=user).first()
     if not range_user:
@@ -140,19 +138,6 @@ def assign_user(user):
         return available.ludus_user_id
     else:
         return range_user.ludus_user_id
-
-
-def load(app):
-    db.create_all()
-    db_setup()
-    app.register_blueprint(ludus_bp)
-    
-    register_plugin_assets_directory(
-        app,
-        base_path="/plugins/ctfd-plugin/assets/"
-    )
-    CHALLENGE_CLASSES["ludus"] = LudusChallenge
-    print("AVAILABLE CHALLENGE TYPES:", CHALLENGE_CLASSES.keys())
  
 ##creating the database to assign ctfd users to
 def db_setup():
@@ -170,3 +155,15 @@ def db_setup():
             new_user = Ranges(user_id, None)
             db.session.add(new_user)
     db.session.commit()
+
+def load(app):
+    db.create_all()
+    db_setup()
+    app.register_blueprint(ludus_bp)
+    
+    register_plugin_assets_directory(
+        app,
+        base_path="/plugins/ctfd-plugin/assets/"
+    )
+    ##adding ludus challenge type to the global ctfd dictionary
+    CHALLENGE_CLASSES["ludus"] = LudusChallenge

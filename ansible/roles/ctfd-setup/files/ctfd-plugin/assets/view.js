@@ -36,17 +36,19 @@ CTFd._internal.challenge.submit = function(preview) {
 async function loadLudusInfo() {
     console.log("Ludus view.js loaded");
     //don't run if just on the home page
-    // if (!window.location.hash) {
-    //   return;
-    // }
+    if (!window.location.hash) {
+      return;
+    }
     try
     {
       // const response = await fetch(
       //   //`/ludus_ranges/challenges/${challengeId}`
       //   `/ludus_ranges/challenges`
       // );
-      const hash = window.location.hash;
-      const challengeId = hash.split("-").pop();
+      // const hash = window.location.hash;
+      // const challengeId = hash.split("-").pop();
+
+      CTFd.lib.$("#challenge-id").val()
       const response = await fetch(
           `/ludus_ranges/challenges/${challengeId}`
       );
@@ -66,7 +68,6 @@ async function loadLudusInfo() {
   }
 
 
-// //ai generated render stuff?? 
 if (!CTFd._internal.challenge.ludusPostRenderInstalled) {
     CTFd._internal.challenge.ludusPostRenderInstalled = true;
 

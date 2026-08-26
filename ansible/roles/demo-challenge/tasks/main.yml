@@ -8,22 +8,19 @@
     name:
       - nginx
 
-- name: Enable nginx service
-  ansible.builtin.systemd_service:
-    name: nginx
-    state: started
-    enabled: true
-
-##work from here
-
 - name: Copy website files to nginx folder
   ansible.builtin.copy:
     src: /files/
-    dest: /etc/var/www
+    dest: /etc/var/www/mywebsite
 
 - name: Configure nginx
   ansible.builtin.template:
-    src: /templates/nginx.conf
-    dest: /etc/nginx/sites-available/default/nginx.conf
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: Restart nginx
 
-- name: Restart nginx
+- name: Start nginx and enable at boot
+  ansible.builtin.service:
+    name: nginx
+    enabled: true
+    state: started

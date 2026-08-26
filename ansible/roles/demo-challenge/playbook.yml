@@ -1,0 +1,7 @@
+- name: Set up nginx
+  hosts: nginx
+  become: true
+  roles:
+    demo-challenge
+
+    

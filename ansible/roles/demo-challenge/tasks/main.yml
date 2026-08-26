@@ -1,0 +1,29 @@
+---
+- name: Update packages
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Install nginx
+  ansible.builtin.apt:
+    name:
+      - nginx
+
+- name: Enable nginx service
+  ansible.builtin.systemd_service:
+    name: nginx
+    state: started
+    enabled: true
+
+##work from here
+
+- name: Copy website files to nginx folder
+  ansible.builtin.copy:
+    src: /files/
+    dest: /etc/var/www
+
+- name: Configure nginx
+  ansible.builtin.template:
+    src: /templates/nginx.conf
+    dest: /etc/nginx/sites-available/default/nginx.conf
+
+- name: Restart nginx

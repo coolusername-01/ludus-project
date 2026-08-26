@@ -21,6 +21,7 @@
 - name: Install python-dotenv
   ansible.builtin.pip:
     name: python-dotenv
+    extra_args: --break-system-packages
 
 - name: Create keyrings directory
   ansible.builtin.file:
